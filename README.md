@@ -22,6 +22,12 @@ Ok, fine. I was siting on the Caltrain, at 4th and King station waiting to go ho
 
 > This project better be good.
 
+Perhaps other names could be:
+
+* Warm up my system
+* Is it running yet?
+* Can we get started yet?
+
 ...
 
 ## What does it do?
