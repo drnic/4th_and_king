@@ -49,3 +49,24 @@ I want to know when the entire system is running. I also want to know if any par
 When I say, "I want to know", there may be multiple systems that collect the status information of the system and its components. 
 
 4th and King should be constantly sending inert tracers through a system and watching for the basic availability of each component.
+
+## Architecture
+
+```
+Subscribers <---|
+                |
+           Public API <--- DB <---- Collector -- -- --> Services
+                ^
+Pollers --------|
+```
+
+The collector processes will need to have access to the Services (in the Example Usage, these were Redis, Indexer, Elastic Search, Web app), and also have access to the 4th & King DB to store the data.
+
+The modular nature of this architecture means that each part can be replaced/improved/scaled over time independently of the others. The collector will retain data locally if the DB is temporarily not available. The Public API can itself be composed of separate systems.
+
+Initially, this implementation is:
+
+* Public API - Sinatra for the Polling API, Sidekiq for background workers to collect from the DB and announce to the Subscribers
+* DB - Redis (caching mode, as it only needs to maintain a window of recent history; want a bigger window? have a bigger Redis)
+* Collector - Sidekiq background workers that each perform actions on a system or its components and watch what happens, then report back to the DB
+
