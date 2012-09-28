@@ -55,7 +55,7 @@ When I say, "I want to know", there may be multiple systems that collect the sta
 ```
 Subscribers <---|
                 |
-           Public API <--- DB <---- Collector -- -- --> Services
+Logfiles <-- Public API <--- DB <---- Collector -- -- --> Services
                 ^
 Pollers --------|
 ```
