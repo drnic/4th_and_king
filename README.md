@@ -72,3 +72,25 @@ Initially, this implementation is:
 * DB - Redis (caching mode, as it only needs to maintain a window of recent history; want a bigger window? have a bigger Redis)
 * Collector - Sidekiq background workers that each perform actions on a system or its components and watch what happens, then report back to the DB
 
+## Polling API
+
+```
+GET /system/ajdkhs-f234h-ql324hj
+
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-45-39-100Z", "stage": "Connecting to broker"}
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-45-39-160Z", "stage": "Observed at broker"}
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-45-42-000Z", "stage": "Observed at broker"}
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-45-42-650Z", "stage": "Left broker"}
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-45-43-123Z", "stage": "Observed at ElasticSearch"}
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-46-00-100Z", "stage": "Displayed at Web app"}
+```
+
+You can restart an event stream with an offset:
+
+```
+GET /system/ajdkhs-f234h-ql324hj
+Header: offset=100
+
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-45-43-123Z", "stage": "Observed at ElasticSearch"}
+{"tracer_uuid": "adsfl-kjh2-34ljh", "timestamp": "2012-09-27-12-46-00-100Z", "stage": "Displayed at Web app"}
+```
