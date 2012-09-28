@@ -56,8 +56,10 @@ When I say, "I want to know", there may be multiple systems that collect the sta
 Subscribers <---|
                 |
 Logfiles <-- Public API <--- DB <---- Collector -- -- --> Services
-                ^
-Pollers --------|
+                ^                         |
+Pollers --------|                         |
+                                          |
+                              Logfiles <--|
 ```
 
 The collector processes will need to have access to the Services (in the Example Usage, these were Redis, Indexer, Elastic Search, Web app), and also have access to the 4th & King DB to store the data.
